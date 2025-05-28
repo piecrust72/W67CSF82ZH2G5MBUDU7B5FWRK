@@ -1,0 +1,39 @@
+name: Update Manifest
+
+on:
+  push:
+    paths:
+      - 'scripts/**'
+  workflow_dispatch:
+
+jobs:
+  generate-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Generate manifest.json
+        run: |
+          echo "{" > manifest.json
+          first=true
+          for dir in scripts/*/; do
+            folder=$(basename "$dir")
+            version_file="$dir/version.txt"
+            if [ -f "$version_file" ]; then
+              version=$(cat "$version_file" | tr -d '\n' | tr -d '\r')
+              if [ "$first" = true ]; then
+                echo "  \"$folder\": \"$version\"" >> manifest.json
+                first=false
+              else
+                echo "  ,\"$folder\": \"$version\"" >> manifest.json
+              fi
+            fi
+          done
+          echo "}" >> manifest.json
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update manifest.json"
+          file_pattern: manifest.json

@@ -2,41 +2,36 @@ name: Update Scripts Manifest
 
 on:
   push:
-    branches: [main]
+    paths:
+      - 'scripts/**'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Generate scripts.json
-      run: |
-        echo "{" > scripts/scripts.json
-        first=1
-        for d in scripts/*/ ; do
-          dir=$(basename "$d")
-          version_file="$d/version.txt"
-          if [ -f "$version_file" ]; then
-            version=$(cat "$version_file" | tr -d '\n')
-            if [ $first -eq 1 ]; then
+      - name: Generate scripts.json
+        run: |
+          echo "{" > scripts.json
+          first=1
+          for dir in scripts/*; do
+            if [ -d "$dir" ] && [ -f "$dir/version.txt" ]; then
+              folder=$(basename "$dir")
+              version=$(cat "$dir/version.txt" | tr -d '\n\r')
+              if [ $first -eq 0 ]; then echo "," >> scripts.json; fi
+              echo "  \"${folder}\": \"${version}\"" >> scripts.json
               first=0
-            else
-              echo "," >> scripts/scripts.json
             fi
-            echo -n "  \"${dir}\": \"${version}\"" >> scripts/scripts.json
-          fi
-        done
-        echo "" >> scripts/scripts.json
-        echo "}" >> scripts/scripts.json
+          done
+          echo "}" >> scripts.json
 
-    - name: Commit and push if changed
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add scripts/scripts.json
-        git diff --cached --quiet || git commit -m "Update scripts.json"
-        git push
+      - name: Commit and Push if Changed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add scripts.json
+          git diff --cached --quiet || git commit -m "Update scripts.json"
+          git push

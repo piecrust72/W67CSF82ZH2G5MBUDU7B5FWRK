@@ -1,0 +1,34 @@
+# .github/workflows/update-version.yml
+name: Auto Version Update
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate version string
+        run: |
+          VERSION="v$(date +'%Y.%m.%d').$(date +%s)"
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Update version.txt
+        run: echo "${VERSION}" > version.txt
+
+      - name: Inject version into main.js
+        run: |
+          sed -i "s/%%VERSION%%/${VERSION}/g" main.js
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add version.txt main.js
+          git commit -m "Auto-update version to ${VERSION}" || echo "No changes to commit"
+          git push

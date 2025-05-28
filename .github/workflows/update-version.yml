@@ -1,4 +1,4 @@
-# .github/workflows/update-version.yml
+# .github/workflows/update-versions.yml
 name: Auto Version Update
 
 on:

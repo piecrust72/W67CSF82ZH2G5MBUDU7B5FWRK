@@ -1,0 +1,53 @@
+// ==UserScript==
+// @name         Remote Script Loader (Smart Cache)
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  Loads main.js from GitHub only if version changes
+// @match        *://*/*
+// @grant        GM_xmlhttpRequest
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @connect      raw.githubusercontent.com
+// ==/UserScript==
+
+(function() {
+    const versionUrl = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/version.txt";
+    const scriptUrl = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/main.js";
+
+    const cacheKey = "remoteScriptCache";
+    const versionKey = "remoteScriptVersion";
+
+    function fetchText(url, callback) {
+        GM_xmlhttpRequest({
+            method: "GET",
+            url,
+            onload: res => callback(res.responseText),
+        });
+    }
+
+    function runScript(code) {
+        try {
+            eval(code);
+        } catch (e) {
+            console.error("Error evaluating remote script:", e);
+        }
+    }
+
+    function updateScript(newVersion) {
+        fetchText(scriptUrl, code => {
+            GM_setValue(cacheKey, code);
+            GM_setValue(versionKey, newVersion);
+            runScript(code);
+        });
+    }
+
+    fetchText(versionUrl, latestVersion => {
+        const cachedVersion = GM_getValue(versionKey, "");
+        if (latestVersion.trim() !== cachedVersion) {
+            updateScript(latestVersion.trim());
+        } else {
+            const cached = GM_getValue(cacheKey, "");
+            if (cached) runScript(cached);
+        }
+    });
+})();

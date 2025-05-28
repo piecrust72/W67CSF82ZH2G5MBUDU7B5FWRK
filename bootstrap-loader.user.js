@@ -11,8 +11,8 @@
 // ==/UserScript==
 
 (function() {
-    const versionUrl = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/version.txt";
-    const scriptUrl = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/main.js";
+    const versionUrl = "https://raw.githubusercontent.com/piecrust72/W67CSF82ZH2G5MBUDU7B5FWRK/refs/heads/main/version.txt";
+    const scriptUrl = "https://raw.githubusercontent.com/piecrust72/W67CSF82ZH2G5MBUDU7B5FWRK/refs/heads/main/main.js";
 
     const cacheKey = "remoteScriptCache";
     const versionKey = "remoteScriptVersion";

@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Replace Christopher Paragraph (Styled Replacement)
 // @namespace    http://tampermonkey.net/
-// @version      1.4
-// @description  Replace Urban Dictionary definition of Christopher with styled custom text, instantly and dynamically using MutationObserver.
+// @version      1.5
+// @description  Replace Urban Dictionary and SophisticatedSoap definition of Christopher with styled custom text, instantly and dynamically using MutationObserver.
 // @author       
 // @match        https://www.urbandictionary.com/define.php?term=Christopher
+// @match        https://sophisticatedsoap.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -46,8 +47,14 @@ So if you meet a Christopher, keep him close. He’s a rare blend of disaster an
     function replaceParagraph() {
         const meaningDivs = document.querySelectorAll('.meaning');
         meaningDivs.forEach(div => {
+            // First replace paragraph if it matches keyword
             if (div.textContent.includes(detectionKeyword)) {
                 div.innerHTML = replacementHTML.trim();
+            }
+
+            // Additional Find & Replace for the name "Michael"
+            if (div.innerHTML.includes('Michael')) {
+                div.innerHTML = div.innerHTML.replace(/Michael/g, 'Christopher');
             }
         });
     }

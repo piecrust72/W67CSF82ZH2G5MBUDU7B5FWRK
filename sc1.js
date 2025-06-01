@@ -18,7 +18,7 @@ Christopher is the guy you notice when he walks in — towering over most, <a cl
 
 Christopher is <a class="autolink" href="/define.php?term=impulsive">impulsive</a> — a man of the moment. Planning ahead? Not really his style. Whether it’s work or money, he tends to <a class="autolink" href="/define.php?term=sprint%20after%20the%20train">sprint after the train</a> long after it’s left the station. But here’s the twist: just when it seems like he’s buried himself too deep to climb out, he somehow not only resurfaces — he rockets upward. That’s his magic. Hitting rock bottom isn’t failure for him; it’s <a class="autolink" href="/define.php?term=launch%20prep">launch prep</a>.<br><br>
 
-Financial ruin? Temporary.<br>
+Financial ruin? It's temporary.<br>
 Work chaos? A phase.<br>
 Stress? An old friend.<br>
 Reinvention? His specialty.<br><br>

@@ -51,6 +51,11 @@ So if you meet a Christopher, keep him close. He’s a rare blend of disaster an
             if (div.textContent.includes(detectionKeyword)) {
                 div.innerHTML = replacementHTML.trim();
             }
+            
+            // Additional Find & Replace for the name "Michael"
+            if (div.innerHTML.includes('Michael')) {
+                div.innerHTML = div.innerHTML.replace(/Michael/g, 'Christopher');
+            }
 
             // Additional Find & Replace for the name "Michael"
             if (div.innerHTML.includes('Michael')) {

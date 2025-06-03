@@ -1,1 +1,1 @@
-alert("✅ GitHub loader test successful!");
+alert("✅");

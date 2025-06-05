@@ -4,7 +4,7 @@
 // @version      1.0
 // @description  Done
 // @author       You
-// @match        https://www.sweepluxe.com/*
+// @match        https://www.sweeeepluxe.com/*
 // @grant        none
 // ==/UserScript==
 
